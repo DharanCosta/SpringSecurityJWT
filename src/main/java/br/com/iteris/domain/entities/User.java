@@ -4,11 +4,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "user_username_unique", columnNames = { "username" }) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "user_username_unique",
+        columnNames = { "username" }) })
+@SequenceGenerator(name = "seq_generator", sequenceName = "SEQ_USER", initialValue = 3, allocationSize = 1)
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator")
     private Long id;
 
     @Column(name = "name", length = 50, nullable = false)
@@ -22,8 +24,10 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey=@ForeignKey(name="fk_users_roles_user")),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", foreignKey=@ForeignKey(name="fk_users_roles_role")))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id",
+                    foreignKey=@ForeignKey(name="fk_users_roles_user")),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id",
+                    foreignKey=@ForeignKey(name="fk_users_roles_role")))
     private List<Role> roles;
 
     public User(String username, String password) {
@@ -38,6 +42,12 @@ public class User {
     public User() {
     }
 
+    public User(String name, String username, String password, List<Role> roles) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
@@ -78,4 +88,6 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+
 }

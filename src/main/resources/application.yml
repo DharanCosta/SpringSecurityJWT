@@ -5,7 +5,11 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        hbm2ddl-auto: create
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 jwt:
   secret-key: djanuwhe89hwaoiehnwoiheeqwejqoieq
-  expiration-time: 15 #minutes
+  expiration-time: 30 #minutes

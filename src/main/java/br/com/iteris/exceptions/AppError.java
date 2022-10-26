@@ -6,7 +6,11 @@ import org.springframework.http.HttpStatus;
 public enum AppError {
 
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, 401, "invalid.credential"),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 401, "invalid.token");
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 401, "invalid.token"),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND,404,"user.not.found"),
+    INVALID_ROLE_ID(HttpStatus.BAD_REQUEST, 400, "id.not.found"),
+    INVALID_FOR_NORMAL_ROLE(HttpStatus.FORBIDDEN,401,"invalid.option.for.normal.user"),
+    INVALID_FOR_ADM_ROLE(HttpStatus.FORBIDDEN,401,"invalid.option.for.adm");
 
     private HttpStatus status;
     private Integer code;
